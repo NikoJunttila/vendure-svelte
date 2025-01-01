@@ -1,0 +1,18 @@
+query Collections{
+  collections{
+    items{
+      name
+      slug
+      position
+      parentId
+      parent{
+        name
+      }
+      featuredAsset{
+        name
+        source
+      }
+    }
+    totalItems
+  }
+}
