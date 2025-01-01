@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { graphql, GetProductDetailStore } from '$houdini'
+  import { graphql, GetProductDetailStore, AddToCartStore } from '$houdini'
   import { formatCurrency } from '$lib/utils'
   import type {PageData} from "./../../$houdini"
   let {data} : {data : PageData} = $props();
@@ -15,12 +15,16 @@
   let selected = $state(product?.variants?.[0])
   let quantity = $state(1)
 
-  const gql_AddToCart = graphql`
+  const gql_AddToCart: AddToCartStore = graphql`
     mutation AddToCart($productVariantId: ID!, $quantity: Int!) {
       addItemToOrder(
         productVariantId: $productVariantId
         quantity: $quantity
       ) {
+        ... on Order {
+          ...NavBarSummary
+          ...CartInfo
+        }
         ... on ErrorResult {
           errorCode
           message

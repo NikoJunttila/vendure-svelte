@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { AdjustOrderStore, type CartInfo, CartStore, fragment, graphql } from '$houdini';
-	import { clickOutside, formatCurrency } from '$lib/utils';
+	import { formatCurrency, clickOutside } from '$lib/utils';
 	import { cartOpen } from '$stores/cart';
 	import { fly } from 'svelte/transition';
 	import Minus from './icons/minus.svelte';
@@ -18,23 +18,21 @@
 	`;
 	const gql_AdjustOrder: AdjustOrderStore = graphql`
 		mutation AdjustOrder($orderLineId: ID!, $quantity: Int!) {
-			adjustOrderLine(orderLineId: $orderLineId, quantity: $quantity) {
+			adjustOrderLine(
+				orderLineId: $orderLineId
+				quantity: $quantity
+			) {
 				... on Order {
 					...CartInfo
+					...NavBarSummary
 				}
 			}
 		}
-	`;
+	`
 	// split with a fragment because we want to use it somewhere else as well
 	let activeOrder: CartInfo | null | undefined = $derived(
 		fromMutation ? $gql_AdjustOrder.data?.adjustOrderLine : $gql_Cart.data?.activeOrder
 	);
-
-	$effect(() => {
-		if (browser) {
-			gql_Cart.fetch()
-		}
-	});
 
 	let frag = $derived(
 		fragment(
@@ -71,10 +69,18 @@
 	const handleClickOutside = () => {
 		$cartOpen = !$cartOpen;
 	};
+
+	$effect(() => {
+		if (browser) {
+			gql_Cart.fetch();
+		}
+	});
 </script>
 
 {#if $cartOpen}
 	<section
+		use:clickOutside
+		onclick_outside={handleClickOutside}
 		in:fly={{ x: 200, duration: 150 }}
 		out:fly={{ x: 400, duration: 150 }}
 		class="fixed right-0 top-0 z-40 h-full w-[30rem] bg-base-100 px-8 pt-4 shadow-xl"
@@ -90,7 +96,6 @@
 			</button>
 			<p>Cart</p>
 		</div>
-		{JSON.stringify($frag)}
 		{#each $frag?.lines ?? [] as item}
 			<div class="my-6 flex">
 				<div class="">
