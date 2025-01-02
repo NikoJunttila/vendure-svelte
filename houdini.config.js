@@ -17,7 +17,10 @@ const config = {
 		},
         Money: {
             type: 'any'
-        }
+        },
+        JSON: {                  // <- The GraphQL Scalar
+            type: "any"  // <-  The TypeScript type
+          },
 	},
     defaultFragmentMasking: true,
 }

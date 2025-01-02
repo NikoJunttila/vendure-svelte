@@ -1,0 +1,8 @@
+	mutation SetOrderBillingAddress($input: CreateAddressInput!) {
+		setOrderBillingAddress(input: $input) {
+			...on ErrorResult {
+				errorCode
+				message
+			}
+		}
+	}

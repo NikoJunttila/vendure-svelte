@@ -1,0 +1,106 @@
+	fragment ActiveOrder on Order {
+		__typename
+		id
+		code
+		state
+		orderPlacedAt
+		currencyCode
+		totalQuantity
+		subTotal
+		shipping
+		total
+		totalWithTax
+		taxSummary {
+			description
+			taxRate
+			taxBase
+			taxTotal
+		}
+		lines {
+			id
+			unitPrice
+			unitPriceWithTax
+			quantity
+			linePrice
+			linePriceWithTax
+			productVariant {
+				id
+				name
+				sku
+				product {
+					slug
+					name
+				}
+				options {
+					code
+					name
+					group {
+						code
+						name
+					}
+				}
+			}
+			featuredAsset {
+				id
+				preview
+			}
+		}
+		shippingLines {
+			shippingMethod {
+				id
+				name
+				description
+			}
+			priceWithTax
+		}
+		discounts {
+			description
+			amountWithTax
+		}
+		couponCodes
+		promotions {
+			id
+			startsAt
+			endsAt
+			couponCode
+			perCustomerUsageLimit
+			usageLimit
+			name
+			description
+			enabled
+		}
+		surcharges {
+			description
+			sku
+			price
+			priceWithTax
+			taxRate
+		}
+		payments {
+			id
+			amount
+			errorMessage
+			method
+			state
+			transactionId
+			createdAt
+		}
+		fulfillments {
+			createdAt
+			updatedAt
+			lines {
+				orderLine {
+					id
+					productVariant {
+						id
+						name
+						sku
+					}
+				}
+				quantity
+			}
+			state
+			method
+			trackingCode
+		}
+	}

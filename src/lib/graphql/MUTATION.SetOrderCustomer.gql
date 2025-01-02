@@ -1,0 +1,8 @@
+	mutation SetCustomerForOrder($input: CreateCustomerInput!) {
+		setCustomerForOrder(input: $input) {
+			...on ErrorResult {
+				errorCode
+				message
+			}
+		}
+	}

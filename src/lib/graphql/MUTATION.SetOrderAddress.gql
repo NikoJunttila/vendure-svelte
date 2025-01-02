@@ -1,0 +1,8 @@
+	mutation SetOrderShippingAddress($input: CreateAddressInput!) {
+		setOrderShippingAddress(input: $input) {
+			...on ErrorResult {
+				errorCode
+				message
+			}
+		}
+	}

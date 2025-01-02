@@ -1,0 +1,20 @@
+	mutation AddOrderPayment($input: PaymentInput!) {
+		addPaymentToOrder(input: $input) {
+			... on Order {
+				id
+				payments {
+					id
+					amount
+					errorMessage
+					method
+					state
+					transactionId
+					createdAt
+				}
+			}
+			... on ErrorResult {
+				errorCode
+				message
+			}
+		}
+	}

@@ -1,0 +1,12 @@
+	mutation TransitionOrderToState($state: String!) {
+		transitionOrderToState(state: $state) {
+			...ActiveOrder
+			...on OrderStateTransitionError {
+				errorCode
+				message
+				transitionError
+				fromState
+				toState
+			}
+		}
+	}

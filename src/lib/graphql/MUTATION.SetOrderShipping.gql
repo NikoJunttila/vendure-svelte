@@ -1,0 +1,9 @@
+	mutation SetOrderShippingMethod($id: [ID!]!) {
+		setOrderShippingMethod(shippingMethodId: $id) {
+			...ActiveOrder
+			...on ErrorResult {
+				errorCode
+				message
+			}
+		}
+	}
