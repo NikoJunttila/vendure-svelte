@@ -3244,6 +3244,7 @@ type Query {
 
   """A list of Facets available to the shop"""
   facets(options: FacetListOptions): FacetList!
+  generateBraintreeClientToken(includeCustomerId: Boolean, orderId: ID): String!
 
   """Returns information about the current authenticated User"""
   me: CurrentUser
